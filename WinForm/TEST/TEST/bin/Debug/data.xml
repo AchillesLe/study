@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<PlanData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Jobs>
+    <PlanItem>
+      <Date_create>2018-07-23T00:00:00+07:00</Date_create>
+      <Job>Test plan</Job>
+      <FromTime>
+        <X>4</X>
+        <Y>0</Y>
+      </FromTime>
+      <Totime>
+        <X>5</X>
+        <Y>0</Y>
+      </Totime>
+      <Status>MISSED</Status>
+    </PlanItem>
+    <PlanItem>
+      <Date_create>2018-07-23T00:00:00+07:00</Date_create>
+      <Job>Test plan</Job>
+      <FromTime>
+        <X>4</X>
+        <Y>0</Y>
+      </FromTime>
+      <Totime>
+        <X>5</X>
+        <Y>0</Y>
+      </Totime>
+      <Status>DONE</Status>
+    </PlanItem>
+    <PlanItem>
+      <Date_create>2018-07-23T00:00:00+07:00</Date_create>
+      <Job>Test plan 11111</Job>
+      <FromTime>
+        <X>4</X>
+        <Y>0</Y>
+      </FromTime>
+      <Totime>
+        <X>5</X>
+        <Y>0</Y>
+      </Totime>
+      <Status>DOING</Status>
+    </PlanItem>
+    <PlanItem>
+      <Date_create>2018-07-23T00:00:00</Date_create>
+      <Job>Mua dầu gội đầu</Job>
+      <FromTime>
+        <X>9</X>
+        <Y>0</Y>
+      </FromTime>
+      <Totime>
+        <X>17</X>
+        <Y>50</Y>
+      </Totime>
+      <Status>COMING</Status>
+    </PlanItem>
+    <PlanItem>
+      <Date_create>2018-07-24T00:00:00</Date_create>
+      <Job>Học Viết nhật kí</Job>
+      <FromTime>
+        <X>6</X>
+        <Y>0</Y>
+      </FromTime>
+      <Totime>
+        <X>10</X>
+        <Y>0</Y>
+      </Totime>
+      <Status>COMING</Status>
+    </PlanItem>
+  </Jobs>
+</PlanData>

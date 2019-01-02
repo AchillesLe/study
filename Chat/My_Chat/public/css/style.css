@@ -1,0 +1,124 @@
+.container{
+    padding-top:50px;
+    font-family:   'Indie Flower', cursive;
+    border: 1px solid #000000;
+    min-height: 600px;
+    height: auto;
+}
+
+.form-login{
+    margin: auto;
+    border: 1px solid #000FFF;
+    width: 600px;
+}
+.form-register{
+    margin: auto;
+    border: 1px solid #000FFF;
+    width: 600px;
+}
+.form-login hr {
+
+    margin: 15px auto 15px auto;
+    color: red;
+}
+.label-login{
+    margin: auto;
+    font-family:   'Indie Flower', cursive;
+    font-size: 48px;
+}
+.form-login div div label {
+
+    margin-left: 10px ;
+    font-weight:bold;
+}
+.home_content{
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #FF0000;
+    overflow: auto;
+    height: auto;
+}
+.left{
+    float: left;
+    min-width:100px;
+    width: 230px;
+    border: 1px solid rgb(252, 71, 0); 
+    padding: 10px;
+    margin-right: 10px;
+    height: auto;
+}
+.center{
+    float: left;
+    min-width:150px;
+    width: 590px;
+    border: 1px solid rgb(2, 39, 17); 
+    padding: 10px;
+    margin-right: 10px;
+    height: auto;
+}
+.right{
+    float: left;
+    min-width:150px;
+    width: 230px;
+    border: 1px solid rgb(27, 36, 27); 
+    padding: 10px;
+    height: auto;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(179, 174, 174);
+    margin: 1em 0;
+    padding: 0; 
+}
+.list_user ul li {
+    list-style-type: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.list_room ul li {
+    list-style-type: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.list_user ul li :hover{
+    background-color: rgb(245, 212, 147);
+}
+.list_room ul li :hover{
+    background-color: rgb(245, 212, 147);
+}
+
+.list_user > .card-header{
+    text-align: center;
+}
+.list_room > .card-header{
+    text-align: center;
+}
+
+.boxchat{
+    height: 500px;
+}
+.boxchat > .card-header{
+    text-align: center;
+}
+.chat-message{
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.chat-message span.text-right{
+    float: right;
+    padding: 10px;
+    height:50px;
+    border-radius: 10px;
+    background-color: rgb(132, 189, 223);
+
+}
+.chat-message span.text-left{
+    padding: 10px;
+    float: left;
+    height:50px;
+    border-radius: 10px;
+    background-color: rgb(238, 233, 233);
+}

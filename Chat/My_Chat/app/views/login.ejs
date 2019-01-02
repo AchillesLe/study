@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <% include partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include partials/header %>
+    </header>
+
+    <main>
+        <div class="wellcome">
+            <center><h1>Welcome to My chat io</h1></center>
+        </div>
+        <form method="POST" action="/login">
+            <div class="form-login">
+                <div class="row">
+                    <label class="label-login">Login</label>
+                </div>
+                <hr>
+                <div class="row form-group">
+                    <div class="col-md-8 offset-md-2"><input class="form-control" type="email" name="email" placeholder="enter your email"/></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-8 offset-md-2"><input class="form-control" type="password" name="password" placeholder="enter your password"/></div>
+                </div>
+                <% if(message.length > 0){  %>
+                    <div class="col-md-8 offset-md-2 alert alert-danger"><%=message%></div>
+                <% } %>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <button class="btn btn-success login" type="submit">
+                            <i class="fa fa-sign-in"></i>
+                            Login
+                        </button>  <a href="/register">create an account !</a>
+                    </div>
+                </div>
+            </div> 
+        </form>
+        
+    </main>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+    <script>
+    </script>
+</body>
+</html>

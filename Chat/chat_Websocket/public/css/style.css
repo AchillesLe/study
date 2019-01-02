@@ -1,0 +1,22 @@
+body{
+    margin-top: 30px;
+    font-family: 'Indie Flower', cursive;
+}
+.left{
+    border: 1px solid rgb(133, 57, 57);
+    background-color: rgb(238, 234, 234); 
+    height: auto;
+}
+.right{
+    border: 1px solid rgb(1, 243, 243);    
+}
+.chat{
+    height: 400px;
+    overflow: auto;
+}
+.well > h3{
+   text-align: center;
+}
+#users{
+    overflow: auto;
+}

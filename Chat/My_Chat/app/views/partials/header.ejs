@@ -1,0 +1,6 @@
+<% if(typeof  user_name != 'undefined' ){%>
+    <h2>Hello , <%=user_name %></h2>
+    <input type="text" hidden value="<%=user_name %>" id="user_name" >
+    <a href="/logout" class="btn btn-info"><i class="fa fa-sign-out"></i>logout</a>
+<% } %>
+

@@ -1,0 +1,171 @@
+<%# views/page/home.ejs %>
+ 
+<% extend('../partials/layout') %>
+<div class="wellcome">
+    <center><h1 >Welcome to My chat io</h1></center>
+    <hr>
+</div>
+<div class="home_content">
+
+<div class="left">
+
+    <div class="card border-info mb-3 list_room" style="max-width: 18rem;">
+        <div class="card-header">list rooms</div>
+        <div class="card-body">
+            <ul id="list_room">
+            </ul>
+        </div>
+    </div>
+
+    <div class="card border-success mb-3 create_room" style="max-width: 18rem;">
+        <div class="card-header">create new room</div>
+        <div class="card-body">
+            <div class="form-group">
+                <input type="text" class="form-control" id="txt_name_room" placeholder="enter room name...">
+            </div>
+            <input type="button" class="btn btn-success" id="btn_create_room" value="Create room">
+        </div>
+    </div>
+
+    <div class="alert" id="message" hidden>
+        
+    </div>
+</div>
+
+<div class="center">
+    <div class="card border-warning mb-3 boxchat" style="max-width: 36rem;">
+        <div class="card-header boxchat_header">Box chat</div>
+        <div class="card-body">
+            <div class="chat-message"><span class="text-left"><strong>Achilles : </strong> Hello</span></div>
+            <div class="chat-message"><span class="text-right">Hi !</span></div>
+        </div>
+        <div class="card-footer">
+            <div class="row chat-message">
+                <textarea class="form-control" id="chat-message" placeholder="Please type your message...">
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right">
+
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">list chat online</div>
+        <ul id="list_user">
+            <li ><i class="fa fa-laptop"></i><span>user 1</span></li>
+            <li ><i class="fa fa-laptop"></i><span>user 2</span></li>
+            <li ><i class="fa fa-laptop"></i><span>user 3</span></li>
+            <li ><i class="fa fa-laptop"></i><span>user 4</span></li>
+        </ul>
+    </div>
+</div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    var socket = null;
+    (function(){
+        socket = io();
+
+        socket.on('list_room',function(data){
+            if(data.length > 0){
+                $('.list_room div ul').html('');
+                data.forEach(function(element){
+                    $('.list_room div ul').prepend(' <li onclick="join_room(this)" data-id="' + element._id +'"><span><i class="fa fa-comments"></i>' + element.name + '</span></li> ');
+                });
+            }     
+        });
+
+        
+        socket.on('server-chat-message-in-room', function(data){
+             var html = '';
+            
+            var from_id = data.from_id;
+            var user_name = data.user_name;
+            if( from_id != socket.id ){
+                html = '<div class="chat-message"><span class="text-left"><strong>'+ user_name + "</strong> : "+ data.message +'</span></div>';
+            }else{
+                html = '<div class="chat-message"><span class="text-right">'+ data.message +'</span></div>';
+            }
+            $('.boxchat .card-body').append(html);
+        });
+
+        socket.on('user_join' , function(data){
+            var user_name = data.user_name;
+            var id = data.id;
+            var html = '<li data-id='+ data.id + '><i class="fa fa-laptop" ></i><span>'+ user_name +'</span></li>';
+            $('#list_user').append(html);
+        });
+
+    })();
+
+    function join_room(object){
+
+        var room_name = $(object).text();
+        var room_id   = $(object).data('id');
+        var user_name = $('#user_name').val();
+        $('.boxchat_header').text(room_name);
+        socket.emit( 'join_room_client' , { user_name:user_name , room_name : room_name , room_id : room_id } );
+        $('.boxchat .card-body').html('');
+        $('#list_user').html('');
+    }
+
+    $(document).ready(function(){
+
+        $('#btn_create_room').on('click',function(e){
+            var url = '/room';
+            var room_name = $.trim( $('#txt_name_room').val() ) ;
+            if( room_name.length > 0){
+                    var r = confirm("Your really want to create that room ? ");
+                    if( r == false ) e.preventDefault();
+                $.ajax({
+                    url : '/room',
+                    type : 'POST' ,
+                    data : {room_name: room_name} ,
+                    dataType : 'json',
+                    success : function(res){
+                        
+                        if(typeof res.success_code != 'undefined' && typeof res.message !='undefined'  ){
+                            var head_alert = '';
+                            switch (res.success_code) {
+                                case 0: head_alert  = 'alert alert-danger'; break;
+                                case 1: head_alert  = 'alert alert-warning'; break; 
+                                default: head_alert = 'alert alert-success'; break;
+                            }
+                            $('#message').addClass(head_alert);
+                            $('#message').html(res.message);
+                            $('#message').removeAttr('hidden',true);
+                            $('#txt_name_room').val('')
+                            setTimeout( function(){
+                                $('#message').attr('hidden',true);
+                            } , 3000);
+                            if(res.success_code == '2'){
+                                var html = ' <li onclick="join_room(this)" data-id="' + res.room_id +'"><span><i class="fa fa-comments"></i>'+ room_name +'</span></li> ';
+                                $('.list_room div ul').prepend(html);
+                            }
+                        }
+                    }
+                });
+            }
+            else{
+                alert('please enter your room name ..');
+            }
+        });
+
+        $('#chat-message').on('keypress',function(e){
+            if( e.keyCode == 13 && e.shiftKey == false ){
+                var message = $.trim( $(this).val() );
+                var room_name = $('.boxchat_header').text();
+                var user_name = $('#user_name').val();
+                if( message.length > 0 ){
+                    socket.emit('chat-message-in-room' , { user_name : user_name ,message : message , room_name : room_name });
+                    $(this).val('');
+                    e.preventDefault();
+                }
+            }
+        });
+
+    });
+</script>
+<script src="/js/socket_client.js"></script>
