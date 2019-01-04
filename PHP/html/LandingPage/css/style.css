@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    color: #926239;
+    line-height: 1.6;
+}
+*{
+    margin: 0;padding: 0;
+}
+#showcase{
+    height: 100vh;
+    background-image: url('../img/showcase.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+#showcase h1{
+    font-size: 50px;
+    color:	#081c29;
+}
+#showcase p{
+    font-size: 20px;
+    color:	#081c29;
+}
+#showcase .button{
+    font-size: 18px;
+    text-decoration: none;
+    color: #081c29;
+    border: 1px solid#081c29;
+}
