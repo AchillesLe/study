@@ -18,7 +18,7 @@
             <div class="form-group">
                 <input type="text"   class="form-control" id="email" v-model="biodataEdit.email" placeholder="email">
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <button type="submit" class="btn btn-info" >save</button>
                 <button type="button" class="btn btn-warning" @click="cancelEdit">cancel</button>
             </div>
@@ -29,13 +29,15 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th> </th>
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="biodata in biodatas"  >
                     <td>{{biodata.name}}</td>
                     <td>{{biodata.email}}</td>
-                    <td><button class="btn btn-success" @click="getEdit(biodata)">Edit</button></td>
+                    <td><button class="btn btn-success" @click="getEdit(biodata)" :disabled="biodata.statusEdit">Edit</button></td>
+                     <td><button class="btn btn-danger" @click="deleted(biodata.id)" >Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -49,7 +51,8 @@ export default {
         return {
             biodata:{
                 name:'',
-                email:''
+                email:'',
+                statusEdit : false
             },
             biodatas: [],
             editStatus : false ,
@@ -66,7 +69,6 @@ export default {
         fecthBiodata(){
             axios.get('/biodata').then(respone=>{
                 this.biodatas = respone.data.data;
-                console.log(this.biodatas);
             });
         },
         createBiodata(){
@@ -79,30 +81,59 @@ export default {
             });
         },
         getEdit(data){
+            this.biodata.statusEdit = false;
+            this.biodata = data;
             this.editStatus = true;
-            this.biodataEdit = data;
+            Object.assign( this.biodataEdit  ,  data );
+            data.statusEdit = true;
+            
         },
-        editBiodata(){
-            axios.patch('/biodata'+biodata.id , this.biodataEdit).then(response=>{
-                let bio = response.data.biodata;
+        updateBiodata(){
+            axios.patch('/biodata/'+ this.biodataEdit.id , this.biodataEdit).then(response=>{
+                let bio =  response.data.biodata;
+                this.biodata.email =  bio.email;
+                this.biodata.name =  bio.name;
 
-                $$.each( this.biodatas , function(key, value) {
-                    console.log(this.biodatas[key]);
-                });
+                this.biodata.statusEdit = false;
+                this.editStatus = false;
 
-                this.biodatas.push(response.data.biodata);
                 this.biodataEdit ={
                     name : '',
                     email :''
                 }
+                this.biodata = {
+                    email :'',
+                    name : '',
+                    statusEdit : false
+                };
+                
             });
         },
         cancelEdit(){
+            this.biodata.statusEdit = false;
             this.editStatus = false;
             this.biodataEdit = {
                 email :'',
                 name : ''
             };
+            this.biodata = {
+                email :'',
+                name : '',
+                statusEdit : false
+            };
+        },
+        deleted(id){
+            let data = this.biodatas;
+            axios.delete('/biodata/'+ id   ).then(response=>{
+                if( response.status == 200){
+                    data.forEach(function(element,index,value){
+                        if( element.id == id ){
+                            data.splice(index,1);
+                        }
+                    });
+                }
+                 
+            });
         }
     }
 }
