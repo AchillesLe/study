@@ -36,7 +36,15 @@ class biodataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email'
+        ]);
+        $bio = new biodata();
+        $bio->name =  $request->name;
+        $bio->email =  $request->email;
+        $bio->save();
+        return response()->json(['biodata'=>biodata::find($bio->id)]);
     }
 
     /**
@@ -58,7 +66,7 @@ class biodataController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -70,7 +78,15 @@ class biodataController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email'
+        ]);
+        $bio = biodata::find( $request->id );
+        $bio->name =  $request->name;
+        $bio->email =  $request->email;
+        $bio->save();
+        return response()->json(['biodata'=>biodata::find($bio->id)]);
     }
 
     /**
